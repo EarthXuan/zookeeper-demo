@@ -1,0 +1,29 @@
+String createPath = zk.create(path, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+
+创建节点过程中ZooDefs.Ids.OPEN_ACL_UNSAFE
+struct ACL_vector ZOO_OPEN_ACL_UNSAFE; //(ZOO_PERM_ALL,ZOO_ANYONE_ID_UNSAFE)
+struct ACL_vector ZOO_READ_ACL_UNSAFE;// (ZOO_PERM_READ, ZOO_ANYONE_ID_UNSAFE)
+struct ACL_vector ZOO_CREATOR_ALL_ACL; //(ZOO_PERM_ALL,ZOO_AUTH_IDS)
+
+ZOO_OPEN_ACL_UNSAFE使所有ACL都“开放”了：任何应用程序在节点上可进行任何操作，能创建、列出和删除它的子节点。对任何应用程序
+ZOO_READ_ACL_UNSAFE是只读的。
+CREATE_ALL_ACL赋予了节点的创建者所有的权限，在创建者采用此ACL创建节点之前，已经被服务器所认证（例如，采用 “ digest”方案）。
+
+
+
+创建节点过程中CreateMode.PERSISTENT
+
+CreateMode类型分为4种
+
+1.PERSISTENT--持久型
+
+2.PERSISTENT_SEQUENTIAL--持久顺序型
+
+3.EPHEMERAL--临时型
+
+4.EPHEMERAL_SEQUENTIAL--临时顺序型
+
+
+1、2种类型客户端断开后不会消失
+
+3、4种类型客户端断开后超时时间内没有新的连接节点将会消息
